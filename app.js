@@ -8,16 +8,28 @@ document.addEventListener("DOMContentLoaded",() =>{
     let gravity= 2
 
     function startGame(){
-        //birdBottom-=gravity
+        if(birdBottom > 0)birdBottom-=gravity
         bird.style.bottom=birdBottom+'px'
         bird.style.left=birdLeft+'px'
     }
     let timerId=setInterval(startGame,20)
 
-    function jump(){
-        birdBottom+=50
-        bird.style.bottom=birdBottom+'px'
+    function control(e){
+        if(e.keyCode === 32) jump()
     }
 
-    document.addEventListener('keyup',jump)
+    function jump(){
+        if(birdBottom < 440)birdBottom+=50
+        bird.style.bottom=birdBottom+'px'
+        console.log(birdBottom)
+    }
+
+    document.addEventListener('keyup',control)
+
+    function generateObstacle(){
+        const obstacle = document.createElement('div')
+        obstacle.classList.add('obstacle')
+        gameDisplay.appendChild(obstacle)
+    }
+    generateObstacle();
 })
