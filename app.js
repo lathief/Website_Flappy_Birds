@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded' , () => {
     let gravity = 3
     let isGameOver = false
     let gap = 430
-
+    generateObstacle()
+    document.addEventListener('keyup', control)
 
     function startGame() {
         birdBottom -= gravity
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded' , () => {
         bird.style.bottom = birdBottom + 'px'
         console.log(birdBottom)
     }
-    document.addEventListener('keyup', control)
+    
 
 
     function generateObstacle() {
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded' , () => {
         if (!isGameOver) setTimeout(generateObstacle, 3000)
 
     }
-    generateObstacle()
+    
 
 
     function gameOver() {
@@ -82,6 +83,4 @@ document.addEventListener('DOMContentLoaded' , () => {
         ground.classList.add('ground')
         ground.classList.remove('ground-moving')
     }
-
-    console.log(isGameOver)
 })
