@@ -3,33 +3,68 @@ document.addEventListener("DOMContentLoaded",() =>{
     const gameDisplay = document.querySelector('.game-container');
     const ground = document.querySelector('.ground');
 
-    let birdLeft=270
-    let birdBottom=100
-    let gravity= 2
+    let birdLeft = 220
+    let birdBottom = 100
+    let gravity = 2
+    let isGameOver = false
 
     function startGame(){
-        if(birdBottom > 0)birdBottom-=gravity
-        bird.style.bottom=birdBottom+'px'
-        bird.style.left=birdLeft+'px'
+        birdBottom -= gravity
+        bird.style.bottom = birdBottom+'px'
+        bird.style.left = birdLeft+'px'
     }
-    let timerId=setInterval(startGame,20)
+    let gametimerId = setInterval(startGame,20)
 
     function control(e){
-        if(e.keyCode === 32) jump()
+        if(e.keyCode === 32) {
+            jump()
+        }
     }
 
     function jump(){
-        if(birdBottom < 440)birdBottom+=50
-        bird.style.bottom=birdBottom+'px'
+        if(birdBottom < 500){
+            birdBottom += 50
+        }
+        bird.style.bottom = birdBottom+'px'
         console.log(birdBottom)
     }
 
     document.addEventListener('keyup',control)
 
     function generateObstacle(){
+        let obstacleLeft = 500
+        let randomHeight = Math.random() * 60
+        let obstacleBottom = randomHeight
         const obstacle = document.createElement('div')
-        obstacle.classList.add('obstacle')
+        if(!isGameOver) obstacle.classList.add('obstacle')
         gameDisplay.appendChild(obstacle)
+        obstacle.style.left = obstacleLeft + 'px'
+        obstacle.style.bottom = obstacleBottom + 'px'
+
+        function moveObstacle(){
+            obstacleLeft -= 2
+            obstacle.style.left = obstacleLeft + 'px'
+
+            if(obstacleLeft === -60){
+                clearInterval(timerId)
+                gameDisplay.removeChild(obstacle)
+            }
+            if(
+                obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 && birdBottom < obstacleBottom + 160 || birdBottom === 0){
+                gameOver()
+                clearInterval(timerId)
+                console.log("okee")
+            }
+        }
+        let timerId = setInterval(moveObstacle,20)
+        if(!isGameOver) setTimeout(generateObstacle,3000)
     }
     generateObstacle();
+
+    function gameOver(){
+        console.log("Game Over")
+        clearInterval(gametimerId)
+        isGameOver = true
+        document.removeEventListener('keyup',control)
+    }
 })
