@@ -1,2 +1,2 @@
-# FlappyBirdsWebsite
-FLAPPY BIRD Game in JavaScript, HTML and CSS (No Canvas)
+# Game Flappy Birds
+Flappy Bird Game in HTML, CSS and JavaScript (No Canvas)
